@@ -3,13 +3,45 @@ import axios from 'axios';
 
 export const fetchData = async (country, chart) => {
     if(chart ==="Bar"){
-        console.log("we fetching bar data BOII")
         return fetchBarData(country);
     }
     else{
         return fetchDailyData(country);
     }
 }
+
+export const fetchMarkerData = async() =>{
+
+    var changeableUrl = `https://corona.lmao.ninja/v2/countries`;
+       
+    try {
+        const { data} = await axios.get(changeableUrl);
+        const geoJson = { 
+            type: 'FeatureCollection',
+            features: data.map((country = {}) => {
+              const { countryInfo = {} } = country;
+              const { lat, long: lng } = countryInfo;
+              return {
+                type: 'Feature',
+                properties: {
+                  ...country,
+                },
+                geometry: {
+                  type: 'Point',
+                  coordinates: [ lng, lat ]
+                }
+              }
+            })
+          }
+        return geoJson;
+    } catch (error) {
+        console.log(error);
+        console.log("we here");
+    }
+}
+
+
+
 
 export const fetchBarData = async(country) =>{
     //let changeableUrl = url;
@@ -44,9 +76,10 @@ export const fetchDailyData = async (country) => {
     }
     try { 
         const { data:data2 } = await axios.get(tempUrl);
-        console.log("Country in teh resonse:",data2.country);
+        console.log("Country in the resonse:",data2.country);
         var modifiedData2 = [];
         var dates;
+        console.log("This is the data from the daily", data2);
         if(country){
             for( dates in data2.timeline.cases){
                 modifiedData2.push({
@@ -55,6 +88,7 @@ export const fetchDailyData = async (country) => {
                     date: dates
                 })
             }
+            console.log("Data going to linedata",modifiedData2);
         }
         else{
             for( dates in data2.cases){
@@ -65,19 +99,18 @@ export const fetchDailyData = async (country) => {
                 })
             }
         }
-        console.log("here is the data inside of the api call",modifiedData2);
         return modifiedData2;
     } catch (error) {
-
+        return [];
     }
 }
 
 export const fetchCountries = async () => {
-    let url = 'https://covid19.mathdro.id/api';
+    let url = 'https://corona.lmao.ninja/v2/countries';
     try {
-        const { data: { countries } } = await axios.get(`${url}/countries`);
-
-        return countries.map((country) => country.name);
+        const { data } = await axios.get(`${url}`);
+        console.log("fetchcountries",data)
+        return data.map((element) => element.country);
 
     } catch (error) {
         console.log(error);

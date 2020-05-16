@@ -10,7 +10,7 @@ const Chart = ({ data: { confirmed, deaths, recovered }, LineData, country, char
   console.log(LineData)
   
   console.log("Here is Daily Data", dailyData);
-  console.log("Char is now", chart);
+  console.log("Chart is now", chart);
   console.log("country is:", country)
   const lineChart = (
     dailyData[0] ? (
@@ -30,6 +30,10 @@ const Chart = ({ data: { confirmed, deaths, recovered }, LineData, country, char
             fill: true,
           }, 
           ],
+        }}
+        options={{
+          legend: { display: false },
+          title: { display: true, text: `Current state in ${country}` },
         }}
       />
     ) : null
@@ -55,10 +59,14 @@ const Chart = ({ data: { confirmed, deaths, recovered }, LineData, country, char
       />
     ) : null
   );
+  console.log("Line Data in Chart",LineData)
+  const error = <div> 'There is no historical data for this country' </div>
 
   return (
     <div className={styles.container}>
       {chart==="Bar" ? barChart: lineChart}
+      {LineData.length===0 && chart !=="Bar" ? error : ''}
+      
     </div>
   );
 };

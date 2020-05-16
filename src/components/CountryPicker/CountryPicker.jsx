@@ -4,7 +4,7 @@ import { NativeSelect , FormControl } from '@material-ui/core';
 import styles from './CountryPicker.module.css';
 import { fetchCountries } from '../../api';
 
-const CountryPicker = ({ handleCountryChange, handleChartChange }) => {
+const CountryPicker = ({ handleCountryChange, handleChartChange,currentcountry }) => {
     const [fetchedCountries, setFetchedCountries] = useState([]);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const CountryPicker = ({ handleCountryChange, handleChartChange }) => {
 
         fetchAPI();
     }, [setFetchedCountries]);
-
+    console.log("This is the handler in country picker", handleCountryChange);
     return (
         <FormControl className={styles.formControl}>
             <NativeSelect defaultValue="" onChange={(e) => handleCountryChange(e.target.value)}>
