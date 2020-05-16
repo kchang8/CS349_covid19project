@@ -1,9 +1,9 @@
 # CS349_covid19project
 
 # Members 
-Kailie Chang
-San Tran
-Raymond Laurente 888911252
+- Kailie Chang
+- San Tran
+- Raymond Laurente 888911252
 
 # To Run
 1. Clone or Download Repo
