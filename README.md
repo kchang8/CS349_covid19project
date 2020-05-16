@@ -1,1 +1,1 @@
-# temp_covid19project
+# CS349_covid19project
