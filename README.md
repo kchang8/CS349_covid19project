@@ -1,5 +1,6 @@
 # CS349_covid19project
-
+# Youtube Link to video presentation
+https://www.youtube.com/watch?v=_9m3GekVoNY
 # Members 
 - Kailie Chang 890005309
 - San Tran
